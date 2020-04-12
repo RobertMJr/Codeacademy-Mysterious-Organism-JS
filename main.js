@@ -33,9 +33,22 @@ const returnRandBase = () => {
             identicalResults += 1;
           } 
         }
-        const percentage = identicalResults / 15 * 100;
+        const percentage = identicalResults / this.dna.length * 100;
         return `Specimen ${this.specimenNum} and specimen ${pAequor.specimenNum} have ${percentage.toFixed 
   (2)}% in common.`
+      },
+      compareDnaV2 (pAequor) {
+        const result = this.dna.reduce((acc, curr, idx, arr) => {
+          if (arr[idx] === pAequor.dna[idx]) {
+            return acc + 1;
+          }
+          else {
+            return acc;
+          }
+        }, 0)
+        const percentage2 = result / this.dna.length * 100;
+        return `Specimen ${this.specimenNum} and specimen ${pAequor.specimenNum} have ${percentage2.toFixed 
+          (2)}% in common.`
       },
       willLikelySurvive () {
         let containsBaseCG = 0;
@@ -50,11 +63,12 @@ const returnRandBase = () => {
     }
   };
   
-  const obiect = pAequorFactory(1, mockUpStrand());
-  const obiect2 = pAequorFactory(2, mockUpStrand());
-  console.log(obiect.dna);
-  console.log(obiect.willLikelySurvive());
-  console.log(obiect.compareDna(obiect2));
+  const objekt = pAequorFactory(1, mockUpStrand());
+  const objekt2 = pAequorFactory(2, mockUpStrand());
+  console.log(objekt.dna);
+  console.log(objekt.willLikelySurvive());
+  console.log(objekt.compareDna(objekt2));
+  console.log(objekt.compareDnaV2(objekt2));
   
   const pAequorArr = [];
   let number = 1;
@@ -62,7 +76,6 @@ const returnRandBase = () => {
   while (pAequorArr.length < 30) {
     if (objector.willLikelySurvive()) {
     pAequorArr.push(objector);
-    console.log('Here');
     number += 1;
     objector = pAequorFactory(number, mockUpStrand());
     }
